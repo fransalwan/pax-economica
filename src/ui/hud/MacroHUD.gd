@@ -45,11 +45,23 @@ func _ready() -> void:
 	EventBus.notification_posted.connect(_on_notification_posted)
 	EventBus.macro_shock_triggered.connect(_on_macro_shock_triggered)
 
+func _create_styled_panel() -> PanelContainer:
+	var panel := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.08, 0.10, 0.15, 0.94)
+	sb.border_color = Color("#30363d")
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(6)
+	sb.set_content_margin_all(10)
+	panel.add_theme_stylebox_override("panel", sb)
+	return panel
+
 func _build_ui() -> void:
 	# 1. TOP BAR (Indikator Makro Utama & Kontrol Kecepatan Waktu)
-	var top_panel := PanelContainer.new()
-	top_panel.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	top_panel.custom_minimum_size = Vector2(0, 54)
+	var top_panel := _create_styled_panel()
+	top_panel.position = Vector2(0, 0)
+	top_panel.size = Vector2(1920, 58)
+	top_panel.custom_minimum_size = Vector2(1920, 58)
 	add_child(top_panel)
 	
 	var top_hbox := HBoxContainer.new()
@@ -93,9 +105,10 @@ func _build_ui() -> void:
 	top_hbox.add_child(btn_load)
 	
 	# 2. LEFT PANEL (Inspektor Provinsi & Pembangunan Sisi Penawaran)
-	var left_panel := PanelContainer.new()
-	left_panel.position = Vector2(12, 66)
-	left_panel.size = Vector2(330, 560)
+	var left_panel := _create_styled_panel()
+	left_panel.position = Vector2(12, 68)
+	left_panel.size = Vector2(350, 880)
+	left_panel.custom_minimum_size = Vector2(350, 880)
 	add_child(left_panel)
 	
 	var left_vbox := VBoxContainer.new()
@@ -126,17 +139,19 @@ func _build_ui() -> void:
 	
 	var scroll_b := ScrollContainer.new()
 	scroll_b.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll_b.custom_minimum_size = Vector2(320, 480)
 	left_vbox.add_child(scroll_b)
 	
 	vbox_buildings = VBoxContainer.new()
 	vbox_buildings.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox_buildings.add_theme_constant_override("separation", 6)
 	scroll_b.add_child(vbox_buildings)
 	
 	# 3. RIGHT PANEL (Tab Analisa Makroekonomi, Bank Sentral, Fiskal, Pasar, & Lab Krisis)
 	var right_tabs := TabContainer.new()
-	right_tabs.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	right_tabs.position = Vector2(1920 - 470, 66)
-	right_tabs.size = Vector2(458, 630)
+	right_tabs.position = Vector2(1410, 68)
+	right_tabs.size = Vector2(496, 880)
+	right_tabs.custom_minimum_size = Vector2(496, 880)
 	add_child(right_tabs)
 	
 	_build_tab_charts(right_tabs)
@@ -146,13 +161,14 @@ func _build_ui() -> void:
 	_build_tab_crisis_lab(right_tabs)
 	
 	# 4. BOTTOM BAR (Pemilih Map Modes & Toast Notifikasi)
-	var bottom_panel := PanelContainer.new()
-	bottom_panel.position = Vector2(12, 638)
-	bottom_panel.size = Vector2(760, 48)
+	var bottom_panel := _create_styled_panel()
+	bottom_panel.position = Vector2(376, 960)
+	bottom_panel.size = Vector2(1020, 54)
+	bottom_panel.custom_minimum_size = Vector2(1020, 54)
 	add_child(bottom_panel)
 	
 	var bottom_hbox := HBoxContainer.new()
-	bottom_hbox.add_theme_constant_override("separation", 8)
+	bottom_hbox.add_theme_constant_override("separation", 10)
 	bottom_panel.add_child(bottom_hbox)
 	
 	var lbl_mm := Label.new()
@@ -160,11 +176,11 @@ func _build_ui() -> void:
 	bottom_hbox.add_child(lbl_mm)
 	
 	var modes: Array[Dictionary] = [
-		{"id": "political", "label": "Politik"},
-		{"id": "gdp", "label": "Heatmap PDB"},
-		{"id": "sol", "label": "Kesejahteraan (SoL)"},
-		{"id": "unemployment", "label": "Pengangguran"},
-		{"id": "infra", "label": "Infrastruktur"}
+		{"id": "political", "label": "Politik (F1)"},
+		{"id": "gdp", "label": "Heatmap PDB (F2)"},
+		{"id": "sol", "label": "Kesejahteraan / SoL (F3)"},
+		{"id": "unemployment", "label": "Pengangguran (F4)"},
+		{"id": "infra", "label": "Infrastruktur (F5)"}
 	]
 	for m in modes:
 		var bm := Button.new()
@@ -177,8 +193,8 @@ func _build_ui() -> void:
 		bottom_hbox.add_child(bm)
 	
 	lbl_toast = Label.new()
-	lbl_toast.position = Vector2(360, 600)
-	lbl_toast.add_theme_font_size_override("font_size", 14)
+	lbl_toast.position = Vector2(380, 925)
+	lbl_toast.add_theme_font_size_override("font_size", 15)
 	lbl_toast.add_theme_color_override("font_color", Color("#f2cc60"))
 	add_child(lbl_toast)
 
@@ -198,28 +214,31 @@ func _create_top_metric(parent: Container, title: String) -> Label:
 
 func _build_tab_charts(tabs: TabContainer) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.name = "📈 Grafik Makro"
-	vbox.add_theme_constant_override("separation", 10)
+	vbox.name = "📈 Grafik"
+	vbox.add_theme_constant_override("separation", 12)
 	tabs.add_child(vbox)
 	
 	chart_gdp = LineChart.new("PDB Bulanan: Nominal vs Riil (Output Fisik)", "")
+	chart_gdp.custom_minimum_size = Vector2(460, 240)
 	vbox.add_child(chart_gdp)
 	
 	chart_inflation = LineChart.new("Laju Inflasi CPI (%) vs Suku Bunga Acuan (%)", "%")
+	chart_inflation.custom_minimum_size = Vector2(460, 240)
 	vbox.add_child(chart_inflation)
 	
 	chart_debt = LineChart.new("Rasio Utang/PDB (%) & Imbal Hasil Obligasi (%)", "%")
+	chart_debt.custom_minimum_size = Vector2(460, 240)
 	vbox.add_child(chart_debt)
 
 func _build_tab_central_bank(tabs: TabContainer) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.name = "🏦 Bank Sentral"
-	vbox.add_theme_constant_override("separation", 10)
+	vbox.name = "🏦 Moneter"
+	vbox.add_theme_constant_override("separation", 12)
 	tabs.add_child(vbox)
 	
 	lbl_monetary_summary = Label.new()
 	lbl_monetary_summary.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl_monetary_summary.add_theme_font_size_override("font_size", 12)
+	lbl_monetary_summary.add_theme_font_size_override("font_size", 13)
 	vbox.add_child(lbl_monetary_summary)
 	
 	lbl_interest_val = Label.new()
@@ -270,29 +289,30 @@ func _build_tab_central_bank(tabs: TabContainer) -> void:
 	var theory_box := RichTextLabel.new()
 	theory_box.bbcode_enabled = true
 	theory_box.fit_content = true
+	theory_box.custom_minimum_size = Vector2(440, 220)
 	theory_box.text = "[b]Panduan Teori Moneter (MV = PY):[/b]\n• [color=#3fb950]Naikkan Suku Bunga:[/color] Menurunkan konsumsi rumah tangga & investasi swasta, memperlambat perputaran uang (V), meredam inflasi, dan menguatkan nilai tukar.\n• [color=#f2cc60]Turunkan Suku Bunga:[/color] Memacu kredit & investasi pabrik swasta, namun berisiko memicu Demand-Pull Inflation.\n• [color=#f85149]Cetak Uang (QE):[/color] Menambah kas negara secara instan tanpa utang, tetapi menaikkan rasio M/Y sehingga seluruh harga barang melonjak."
 	vbox.add_child(theory_box)
 
 func _build_tab_fiscal(tabs: TabContainer) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.name = "⚖️ Fiskal & Utang"
-	vbox.add_theme_constant_override("separation", 8)
+	vbox.name = "⚖️ Fiskal"
+	vbox.add_theme_constant_override("separation", 10)
 	tabs.add_child(vbox)
 	
 	lbl_fiscal_summary = Label.new()
 	lbl_fiscal_summary.add_theme_font_size_override("font_size", 12)
 	vbox.add_child(lbl_fiscal_summary)
 	
-	slider_income_tax = _add_policy_slider(vbox, "Pajak Penghasilan (Income Tax)", 0.0, 45.0, 15.0, func(v: float):
+	slider_income_tax = _add_policy_slider(vbox, "Pajak Penghasilan (Income Tax %)", 0.0, 45.0, 15.0, func(v: float):
 		WorldEconomy.get_player_nation().income_tax_rate = v / 100.0
 	)
-	slider_corp_tax = _add_policy_slider(vbox, "Pajak Laba Industri (Corporate Tax)", 0.0, 50.0, 20.0, func(v: float):
+	slider_corp_tax = _add_policy_slider(vbox, "Pajak Laba Industri (Corporate Tax %)", 0.0, 50.0, 20.0, func(v: float):
 		WorldEconomy.get_player_nation().corporate_tax_rate = v / 100.0
 	)
-	slider_vat = _add_policy_slider(vbox, "Pajak Konsumsi / PPN (VAT)", 0.0, 25.0, 8.0, func(v: float):
+	slider_vat = _add_policy_slider(vbox, "Pajak Konsumsi / PPN (VAT %)", 0.0, 25.0, 8.0, func(v: float):
 		WorldEconomy.get_player_nation().vat_rate = v / 100.0
 	)
-	slider_tariff = _add_policy_slider(vbox, "Bea Masuk / Tarif Impor", 0.0, 50.0, 10.0, func(v: float):
+	slider_tariff = _add_policy_slider(vbox, "Bea Masuk / Tarif Impor (%)", 0.0, 50.0, 10.0, func(v: float):
 		WorldEconomy.get_player_nation().import_tariff_rate = v / 100.0
 	)
 	slider_subsidy = _add_policy_slider(vbox, "Subsidi Kesejahteraan Bulanan (Ribu)", 0.0, 25.0, 4.0, func(v: float):
@@ -324,7 +344,7 @@ func _build_tab_fiscal(tabs: TabContainer) -> void:
 
 func _add_policy_slider(parent: Container, label_title: String, min_v: float, max_v: float, init_v: float, callback: Callable) -> HSlider:
 	var lbl := Label.new()
-	lbl.text = "%s: %.1f%%" % [label_title, init_v]
+	lbl.text = "%s: %.1f" % [label_title, init_v]
 	lbl.add_theme_font_size_override("font_size", 12)
 	parent.add_child(lbl)
 	
@@ -343,18 +363,18 @@ func _add_policy_slider(parent: Container, label_title: String, min_v: float, ma
 
 func _build_tab_market_ledger(tabs: TabContainer) -> void:
 	var scroll := ScrollContainer.new()
-	scroll.name = "📦 Pasar & Global"
+	scroll.name = "📦 Pasar"
 	tabs.add_child(scroll)
 	
 	vbox_market_rows = VBoxContainer.new()
 	vbox_market_rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	vbox_market_rows.add_theme_constant_override("separation", 6)
+	vbox_market_rows.add_theme_constant_override("separation", 8)
 	scroll.add_child(vbox_market_rows)
 
 func _build_tab_crisis_lab(tabs: TabContainer) -> void:
 	var vbox := VBoxContainer.new()
-	vbox.name = "⚡ Lab Krisis"
-	vbox.add_theme_constant_override("separation", 10)
+	vbox.name = "⚡ Krisis"
+	vbox.add_theme_constant_override("separation", 12)
 	tabs.add_child(vbox)
 	
 	var intro := Label.new()
@@ -364,9 +384,9 @@ func _build_tab_crisis_lab(tabs: TabContainer) -> void:
 	vbox.add_child(intro)
 	
 	var scenarios: Array[Dictionary] = [
-		{"id": "stagflation", "title": "🔥 Picu Supply-Side Stagflation Shock (Gagal Panen & Krisis Energi)"},
-		{"id": "dutch_disease", "title": "💎 Picu Dutch Disease (Boom Komoditas & Penguatan Kurs Ekstrem)"},
-		{"id": "debt_spiral", "title": "📉 Picu Sovereign Debt Crisis (Lonjakan Rasio Utang & Bond Yield)"}
+		{"id": "stagflation", "title": "🔥 Picu Supply-Side Stagflation Shock"},
+		{"id": "dutch_disease", "title": "💎 Picu Dutch Disease (Kutukan SDA)"},
+		{"id": "debt_spiral", "title": "📉 Picu Sovereign Debt Crisis (Krisis Utang)"}
 	]
 	for sc in scenarios:
 		var b := Button.new()
@@ -378,6 +398,7 @@ func _build_tab_crisis_lab(tabs: TabContainer) -> void:
 	lbl_crisis_advice = RichTextLabel.new()
 	lbl_crisis_advice.bbcode_enabled = true
 	lbl_crisis_advice.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	lbl_crisis_advice.custom_minimum_size = Vector2(440, 260)
 	lbl_crisis_advice.text = "[b]Diagnosis & Catatan Ekonom:[/b]\nPilih salah satu skenario krisis di atas atau amati dinamika pasar secara organik."
 	vbox.add_child(lbl_crisis_advice)
 
@@ -388,7 +409,6 @@ func _refresh_all_ui() -> void:
 	
 	lbl_date.text = "📅 " + FormatUtils.format_date(SimulationClock.current_year, SimulationClock.current_month)
 	
-	# Update Topbar
 	var annual_nom_gdp: float = player.nominal_gdp * 12.0
 	lbl_gdp.text = "%s (Riil %s)" % [
 		FormatUtils.format_currency(annual_nom_gdp, player.currency_code + " "),
@@ -398,7 +418,7 @@ func _refresh_all_ui() -> void:
 		player.cpi_index,
 		FormatUtils.format_percent(player.inflation_rate, true)
 	]
-	lbl_rates.text = "BI/Acuan %s | Yield %s" % [
+	lbl_rates.text = "Acuan %s | Yield %s" % [
 		FormatUtils.format_percent(player.policy_interest_rate),
 		FormatUtils.format_percent(player.bond_yield)
 	]
@@ -412,7 +432,6 @@ func _refresh_all_ui() -> void:
 		FormatUtils.format_currency(player.net_exports_nx, "")
 	]
 	
-	# Update Charts
 	chart_gdp.set_series([
 		{"name": "PDB Nominal", "values": player.history_nominal_gdp, "color": Color("#58a6ff")},
 		{"name": "PDB Riil", "values": player.history_real_gdp, "color": Color("#3fb950")}
@@ -426,7 +445,6 @@ func _refresh_all_ui() -> void:
 		{"name": "Bond Yield", "values": player.history_bond_yield, "color": Color("#f778ba")}
 	])
 	
-	# Update Monetary Summary
 	lbl_monetary_summary.text = (
 		"Jumlah Uang Beredar (M): %s\n" % FormatUtils.format_currency(player.money_supply, player.currency_code + " ") +
 		"Perputaran Uang (Velocity V): %.2f\n" % player.velocity_of_money +
@@ -437,7 +455,6 @@ func _refresh_all_ui() -> void:
 		]
 	)
 	
-	# Update Fiscal Summary
 	lbl_fiscal_summary.text = (
 		"Penerimaan Pajak + Tarif Bulanan: %s\n" % FormatUtils.format_currency(player.last_tax_revenue + player.last_tariff_revenue, "") +
 		"Belanja Negara (G) + Bunga Obligasi: %s (Bunga: %s)\n" % [
@@ -560,4 +577,3 @@ func _on_macro_shock_triggered(title: String, description: String, advice: Strin
 	lbl_toast.text = title
 	if lbl_crisis_advice:
 		lbl_crisis_advice.text = "[b][color=#f85149]%s[/color][/b]\n%s\n\n[b][color=#3fb950]%s[/color][/b]" % [title, description, advice]
-

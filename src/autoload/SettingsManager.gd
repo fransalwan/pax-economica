@@ -42,10 +42,9 @@ func apply_settings() -> void:
 	if fullscreen_mode:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 func set_ui_scale(new_scale: float) -> void:
 	ui_scale = clampf(new_scale, 0.8, 1.4)
 	apply_settings()
 	save_settings()
-
