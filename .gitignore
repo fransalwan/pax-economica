@@ -1,0 +1,37 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+
+# Exported builds & binaries
+build/
+builds/
+export/
+*.exe
+*.pck
+*.dmg
+*.apk
+*.aab
+*.x86_64
+*.debug
+
+# Steamworks SDK binaries & local build logs (keep .vdf templates)
+steam/app_build/output/
+steam/sdk/
+steam_appid.txt
+*.dll
+*.so
+*.dylib
+
+# Godot crash logs & temporary files
+*.log
+*.tmp
+override.cfg
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+*~
