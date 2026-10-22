@@ -1,0 +1,24 @@
+"AppBuild"
+{
+	"AppID" "480" // Ganti dengan AppID Steam resmi kamu saat mendaftar Steam Direct
+	"Desc" "Pax Economica - v1.0 Build"
+	"BuildOutput" "./output/"
+	"ContentRoot" "../../build/"
+	"SetLive" "beta"
+	"Preview" "0"
+	"Local" ""
+
+	"Depots"
+	{
+		"481" // Depot Windows 64-bit
+		{
+			"FileMapping"
+			{
+				"LocalPath" "./windows/*"
+				"DepotPath" "."
+				"recursive" "1"
+			}
+			"FileExclusion" "*.pdb"
+		}
+	}
+}

@@ -69,3 +69,4 @@ $$Y_{bond} = r + \max\left(0, \left(\frac{\text{Total Debt}}{GDP_{nominal}} - 0.
 
 ### Fitur 6: Perdagangan Internasional & Nilai Tukar (*FX Rate*)
 $$\Delta FX_{A/B} \propto (X_A - M_A) + \gamma (r_A - r_B) - (\pi_A - \pi_B)$$
+

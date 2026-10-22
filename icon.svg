@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="20" fill="#161b22"/>
+  <rect x="6" y="6" width="116" height="116" rx="16" fill="none" stroke="#d4af37" stroke-width="3"/>
+  <path d="M24 94 L48 68 L68 78 L102 34" fill="none" stroke="#3fb950" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="102" cy="34" r="6" fill="#3fb950"/>
+  <path d="M24 102 L104 102" stroke="#d4af37" stroke-width="4" stroke-linecap="round"/>
+  <text x="24" y="46" font-family="serif" font-size="26" font-weight="bold" fill="#d4af37">PAX</text>
+</svg>

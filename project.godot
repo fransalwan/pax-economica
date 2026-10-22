@@ -1,0 +1,40 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Pax Economica"
+config/description="Grand Strategy & Macroeconomic Simulator built with Godot 4."
+config/version="0.1.0-alpha"
+run/main_scene="res://src/scenes/world/WorldScene.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+EventBus="*res://src/autoload/EventBus.gd"
+SteamManager="*res://src/autoload/SteamManager.gd"
+SettingsManager="*res://src/autoload/SettingsManager.gd"
+SaveManager="*res://src/autoload/SaveManager.gd"
+SimulationClock="*res://src/autoload/SimulationClock.gd"
+WorldEconomy="*res://src/autoload/WorldEconomy.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=1
+environment/defaults/default_clear_color=Color(0.07, 0.09, 0.13, 1)

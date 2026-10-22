@@ -40,3 +40,4 @@ Dokumen ini merangkum standar arsitektur dan *pipeline* yang diterapkan di **Pax
 ## 3. Deployment Pipeline (`steam/app_build/`)
 - Export *build* Windows (`x86_64`) dan Linux (`x86_64`) dari Godot 4.
 - Unggah ke depot Steam menggunakan `steamcmd` dengan skrip konfigurasi `.vdf` di dalam `steam/app_build/`.
+

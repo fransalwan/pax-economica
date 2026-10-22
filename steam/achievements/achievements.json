@@ -1,0 +1,19 @@
+{
+	"achievements": [
+		{
+			"id": "INDUSTRIAL_TITAN",
+			"title": "Industrial Titan",
+			"description": "Tingkatkan Output PDB Riil bulanan Kekaisaran melampaui 260,000."
+		},
+		{
+			"id": "SOVEREIGN_DEBT_FREE",
+			"title": "Sovereign Debt Free",
+			"description": "Lunasi seluruh utang obligasi negara hingga nol setelah minimal 1 tahun berjalan."
+		},
+		{
+			"id": "WELFARE_SUPERPOWER",
+			"title": "Welfare Superpower",
+			"description": "Capai rata-rata Standard of Living (SoL) populasi nasional minimal 75.0."
+		}
+	]
+}
