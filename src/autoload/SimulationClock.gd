@@ -37,3 +37,4 @@ func set_speed(multiplier: int) -> void:
 	speed_multiplier = clampi(multiplier, 1, 5)
 	is_paused = false
 	EventBus.speed_changed.emit(speed_multiplier, is_paused)
+

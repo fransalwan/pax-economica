@@ -34,3 +34,4 @@ static func format_population(pop: int) -> String:
 static func format_date(year: int, month: int) -> String:
 	var idx: int = clampi(month - 1, 0, 11)
 	return "%s %d" % [MONTH_NAMES[idx], year]
+

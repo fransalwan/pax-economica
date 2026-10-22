@@ -45,3 +45,4 @@ func update_rich_presence(nation_name: String, year: int, gdp_text: String, infl
 		var status_str: String = "%s (%d) | GDP: %s | CPI: %s" % [nation_name, year, gdp_text, inflation_text]
 		steam_singleton.call("setRichPresence", "steam_display", "#StatusFull")
 		steam_singleton.call("setRichPresence", "status", status_str)
+

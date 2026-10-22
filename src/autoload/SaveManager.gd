@@ -52,3 +52,4 @@ func load_game(slot_name: String = "autosave") -> bool:
 	EventBus.tick_completed.emit(SimulationClock.current_year, SimulationClock.current_month)
 	EventBus.notification_posted.emit("📂 Save game '%s' berhasil dimuat!" % slot_name, "success")
 	return true
+

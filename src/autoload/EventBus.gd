@@ -7,3 +7,4 @@ signal map_mode_changed(mode_id: String)
 signal policy_updated(nation_id: String)
 signal macro_shock_triggered(title: String, description: String, advice: String)
 signal notification_posted(message: String, severity: String)
+

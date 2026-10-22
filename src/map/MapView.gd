@@ -184,3 +184,4 @@ func _draw() -> void:
 				sub_text = "Infra Lv.%d (Efisiensi %s)" % [prov.infrastructure_level, FormatUtils.format_percent(prov.get_infrastructure_efficiency())]
 		
 		draw_string(font, Vector2(pos.x - 76, pos.y + 13), sub_text, HORIZONTAL_ALIGNMENT_CENTER, 152, 11, Color("#e6edf3"))
+

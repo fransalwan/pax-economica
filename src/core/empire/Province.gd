@@ -208,3 +208,4 @@ func process_consumption_and_investment(
 		"consumption": local_consumption_value,
 		"investment": local_private_investment
 	}
+

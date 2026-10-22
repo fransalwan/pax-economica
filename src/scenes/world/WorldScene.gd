@@ -41,3 +41,4 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			KEY_F5:
 				WorldEconomy.current_map_mode = "infra"
 				EventBus.map_mode_changed.emit("infra")
+

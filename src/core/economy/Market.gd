@@ -92,3 +92,4 @@ func from_dict(data: Dictionary) -> void:
 		previous_prices = data["previous_prices"].duplicate()
 	if data.has("net_trade_volume"):
 		net_trade_volume = data["net_trade_volume"].duplicate()
+

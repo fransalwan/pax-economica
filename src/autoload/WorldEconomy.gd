@@ -365,3 +365,4 @@ func deserialize_state(data: Dictionary) -> void:
 	player.corporate_tax_rate = float(data.get("corporate_tax_rate", 0.20))
 	player.vat_rate = float(data.get("vat_rate", 0.08))
 	player.import_tariff_rate = float(data.get("import_tariff_rate", 0.10))
+

@@ -93,3 +93,4 @@ func _format_axis_val(val: float) -> String:
 	elif a >= 1_000.0:
 		return "%.1fK" % (val / 1_000.0)
 	return "%.1f" % val
+

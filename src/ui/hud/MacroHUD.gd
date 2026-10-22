@@ -560,3 +560,4 @@ func _on_macro_shock_triggered(title: String, description: String, advice: Strin
 	lbl_toast.text = title
 	if lbl_crisis_advice:
 		lbl_crisis_advice.text = "[b][color=#f85149]%s[/color][/b]\n%s\n\n[b][color=#3fb950]%s[/color][/b]" % [title, description, advice]
+

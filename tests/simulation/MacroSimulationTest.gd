@@ -30,3 +30,4 @@ func _init() -> void:
 	assert(test_nation.cpi_index > baseline_cpi, "CPI wajib naik ketika jumlah uang beredar ditambah drastis!")
 	print("✅ Semua pengujian makroekonomi lulus!")
 	quit(0)
+

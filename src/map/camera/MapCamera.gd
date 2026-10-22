@@ -49,3 +49,4 @@ func _set_zoom(new_zoom: float) -> void:
 func _clamp_camera_bounds() -> void:
 	position.x = clampf(position.x, 200.0, 1150.0)
 	position.y = clampf(position.y, 120.0, 620.0)
+

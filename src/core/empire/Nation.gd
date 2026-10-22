@@ -250,3 +250,4 @@ func _push_hist(arr: Array[float], val: float) -> void:
 	arr.append(val)
 	if arr.size() > MAX_HISTORY:
 		arr.pop_front()
+

@@ -33,3 +33,4 @@ static func create_default_catalog() -> Dictionary:
 		"tools": CommodityData.new("tools", "Mesin & Alat Kerja", 45.0, 0.05, false, Color("#d29922")),
 		"luxury": CommodityData.new("luxury", "Barang Mewah & Rempah", 80.0, 0.05, false, Color("#f778ba"))
 	}
+
