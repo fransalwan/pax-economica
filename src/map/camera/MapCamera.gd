@@ -2,15 +2,16 @@ class_name MapCamera
 extends Camera2D
 
 var zoom_level: float = 1.0
-const MIN_ZOOM: float = 0.65
-const MAX_ZOOM: float = 2.40
+const MIN_ZOOM: float = 0.70
+const MAX_ZOOM: float = 2.20
 const ZOOM_SPEED: float = 0.12
 const PAN_SPEED: float = 520.0
 
 var _is_dragging: bool = false
 
 func _ready() -> void:
-	position = Vector2(660, 360)
+	# Posisikan kamera tepat di tengah kepulauan agar tidak tertutup panel kiri/kanan
+	position = Vector2(780, 395)
 	zoom = Vector2(zoom_level, zoom_level)
 
 func _process(delta: float) -> void:
@@ -47,6 +48,5 @@ func _set_zoom(new_zoom: float) -> void:
 	zoom = Vector2(zoom_level, zoom_level)
 
 func _clamp_camera_bounds() -> void:
-	position.x = clampf(position.x, 200.0, 1150.0)
-	position.y = clampf(position.y, 120.0, 620.0)
-
+	position.x = clampf(position.x, 350.0, 1250.0)
+	position.y = clampf(position.y, 180.0, 650.0)
